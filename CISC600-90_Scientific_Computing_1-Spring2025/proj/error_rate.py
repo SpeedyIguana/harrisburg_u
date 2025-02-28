@@ -16,6 +16,13 @@ def approximate_error(
     return current_value - previous_value
 
 
+def approximate_relative_error(
+    current_value: float,
+    previous_value: float,
+) -> float:
+    return 1 - previous_value / current_value
+
+
 def true_relative_error(
     true_value: float,
     approximate_value: float,

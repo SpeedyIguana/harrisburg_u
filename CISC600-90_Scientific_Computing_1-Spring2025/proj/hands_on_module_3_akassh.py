@@ -1,0 +1,256 @@
+# Hands on module 3
+# - Course: CISC600-90-O
+# - Semester: Spring 2025
+# - Student Name: Akassh Shah
+
+# Pick and solve any one (1) problem from the set {3.7, 3.8, 3.9, 3.11, 3.12, 3.14}, pages 81-82. Analyze your results and upload your solution in a text or word file. (Note: If your solution includes source code, please upload it in a separate file). You can use the Discussions section for technical Q&A if needed.
+
+# (Note: make sure to use the official textbook Chapra and Canale, 8th edition - don't use an earlier or newer edition)
+
+# Problem chosen: 3.7
+
+# 3.7
+
+from math import factorial, e
+
+
+def true_relative_error(
+    true_value: float,
+    approximate_value: float,
+) -> float:
+    return 1 - approximate_value / true_value
+
+
+def series_1(
+    n: int,
+    x: float,
+) -> float:
+    def _series_1_helper(
+        _n: int,
+    ) -> float:
+        return (
+            0
+            if _n < 0
+            else ((((-1) ** (_n % 2)) * (x**_n)) / factorial(_n))
+            + _series_1_helper(_n - 1)
+        )
+
+    return _series_1_helper(n)
+
+
+def series_2(
+    n: int,
+    x: float,
+) -> float:
+
+    def _series_2_helper(
+        _n: int,
+    ):
+        return 0 if _n < 0 else ((x**_n) / factorial(_n)) + _series_2_helper(_n - 1)
+
+    return _series_2_helper(n) ** -1
+
+
+def true_relative_error(
+    true_value: float,
+    approximate_value: float,
+) -> float:
+    return 1 - approximate_value / true_value
+
+
+def approximate_relative_error(
+    current_value: float,
+    previous_value: float,
+) -> float:
+    return None if previous_value is None else 1 - previous_value / current_value
+
+
+# true_value = e**-5
+true_value = 6.737947 * (10**-3.0)
+
+prev_series_1_approx = None
+prev_series_2_approx = None
+
+
+print(f"true value of e **-5: {true_value=}")
+for i in range(1, 21):
+
+    series_1_value = series_1(i, 5.0)
+    series_1_true_relative_error = true_relative_error(
+        true_value=true_value,
+        approximate_value=series_1_value,
+    )
+    series_1_approximate_relative_error = approximate_relative_error(
+        current_value=series_1_value,
+        previous_value=prev_series_1_approx,
+    )
+
+    series_2_value = series_2(i, 5.0)
+    series_2_true_relative_error = true_relative_error(
+        true_value=true_value,
+        approximate_value=series_2_value,
+    )
+    series_2_approximate_relative_error = approximate_relative_error(
+        current_value=series_2_value,
+        previous_value=prev_series_2_approx,
+    )
+
+    print("-" * 10)
+    print(f"At number of terms: {i=}")
+    print(f"Approximate value from series 1: {series_1_value=}")
+    print(f"Approximate value from series 2: {series_2_value=}")
+    print(
+        f"Series 1 errors: {series_1_true_relative_error=}, {series_1_approximate_relative_error=}",
+    )
+    print(
+        f"Series 2 errors: {series_2_true_relative_error=}, {series_2_approximate_relative_error=}",
+    )
+    print("-" * 10)
+
+    prev_series_1_approx = series_1_value
+    prev_series_2_approx = series_2_value
+
+
+# Output
+
+# true value of e **-5: true_value=0.006737947
+# ----------
+# At number of terms: i=1
+# Approximate value from series 1: series_1_value=-4.0
+# Approximate value from series 2: series_2_value=0.16666666666666666
+# Series 1 errors: series_1_true_relative_error=594.6526363297307, series_1_approximate_relative_error=None
+# Series 2 errors: series_2_true_relative_error=-23.735526513738776, series_2_approximate_relative_error=None
+# ----------
+# ----------
+# At number of terms: i=2
+# Approximate value from series 1: series_1_value=8.5
+# Approximate value from series 2: series_2_value=0.05405405405405406
+# Series 1 errors: series_1_true_relative_error=-1260.5118522006776, series_1_approximate_relative_error=1.4705882352941178
+# Series 2 errors: series_2_true_relative_error=-7.022332923374739, series_2_approximate_relative_error=-2.083333333333333
+# ----------
+# ----------
+# At number of terms: i=3
+# Approximate value from series 1: series_1_value=-12.333333333333332
+# Approximate value from series 2: series_2_value=0.025423728813559324
+# Series 1 errors: series_1_true_relative_error=1831.4289620166694, series_1_approximate_relative_error=1.6891891891891893
+# Series 2 errors: series_2_true_relative_error=-2.773215908875407, series_2_approximate_relative_error=-1.1261261261261262
+# ----------
+# ----------
+# At number of terms: i=4
+# Approximate value from series 1: series_1_value=13.708333333333336
+# Approximate value from series 2: series_2_value=0.015296367112810707
+# Series 1 errors: series_1_true_relative_error=-2033.4970557550148, series_1_approximate_relative_error=1.8996960486322187
+# Series 2 errors: series_2_true_relative_error=-1.2701821656968666, series_2_approximate_relative_error=-0.6620762711864407
+# ----------
+# ----------
+# At number of terms: i=5
+# Approximate value from series 1: series_1_value=-12.333333333333332
+# Approximate value from series 2: series_2_value=0.010938924339106653
+# Series 1 errors: series_1_true_relative_error=1831.4289620166694, series_1_approximate_relative_error=2.111486486486487
+# Series 2 errors: series_2_true_relative_error=-0.6234803181305304, series_2_approximate_relative_error=-0.39834289356277885
+# ----------
+# ----------
+# At number of terms: i=6
+# Approximate value from series 1: series_1_value=9.368055555555557
+# Approximate value from series 2: series_2_value=0.008840321689483701
+# Series 1 errors: series_1_true_relative_error=-1389.342719459734, series_1_approximate_relative_error=2.3165307635285393
+# Series 2 errors: series_2_true_relative_error=-0.3120200692412245, series_2_approximate_relative_error=-0.23738985110908528
+# ----------
+# ----------
+# At number of terms: i=7
+# Approximate value from series 1: series_1_value=-6.132936507936506
+# Approximate value from series 2: series_2_value=0.00777489818585709
+# Series 1 errors: series_1_true_relative_error=911.2084815948398, series_1_approximate_relative_error=2.52749919120026
+# Series 2 errors: series_2_true_relative_error=-0.15389720130732543, series_2_approximate_relative_error=-0.13703375634740356
+# ----------
+# ----------
+# At number of terms: i=8
+# Approximate value from series 1: series_1_value=3.5551835317460334
+# Approximate value from series 2: series_2_value=0.007230283266789742
+# Series 1 errors: series_1_true_relative_error=-526.6360190642689, series_1_approximate_relative_error=2.7250688897415314
+# Series 2 errors: series_2_true_relative_error=-0.07306918068511692, series_2_approximate_relative_error=-0.0753241469208934
+# ----------
+# ----------
+# At number of terms: i=9
+# Approximate value from series 1: series_1_value=-1.827105379188711
+# Approximate value from series 2: series_2_value=0.006959452863649537
+# Series 1 errors: series_1_true_relative_error=272.16648130190265, series_1_approximate_relative_error=2.9458010316430903
+# Series 2 errors: series_2_true_relative_error=-0.03287438497951034, series_2_approximate_relative_error=-0.03891547344975921
+# ----------
+# ----------
+# At number of terms: i=10
+# Approximate value from series 1: series_1_value=0.8640390762786612
+# Approximate value from series 2: series_2_value=0.006831506312973185
+# Series 1 errors: series_1_true_relative_error=-127.23476888118313, series_1_approximate_relative_error=3.1146096621670054
+# Series 2 errors: series_2_true_relative_error=-0.013885433199932296, series_2_approximate_relative_error=-0.018728892987097012
+# ----------
+# ----------
+# At number of terms: i=11
+# Approximate value from series 1: series_1_value=-0.3592084034792353
+# Approximate value from series 2: series_2_value=0.006774891102970596
+# Series 1 errors: series_1_true_relative_error=54.31125392931041, series_1_approximate_relative_error=3.4053977243007583
+# Series 2 errors: series_2_true_relative_error=-0.005482991031332762, series_2_approximate_relative_error=-0.008356622880294706
+# ----------
+# ----------
+# At number of terms: i=12
+# Approximate value from series 1: series_1_value=0.15047804641988816
+# Approximate value from series 2: series_2_value=0.006751577432172176
+# Series 1 errors: series_1_true_relative_error=-21.33292224172855, series_1_approximate_relative_error=3.3871150112948305
+# Series 2 errors: series_2_true_relative_error=-0.002022935498331435, series_2_approximate_relative_error=-0.003453070194726404
+# ----------
+# ----------
+# At number of terms: i=13
+# Approximate value from series 1: series_1_value=-0.045555203541313205
+# Approximate value from series 2: series_2_value=0.006742653303524142
+# Series 1 errors: series_1_true_relative_error=7.760991670209517, series_1_approximate_relative_error=4.303202153041031
+# Series 2 errors: series_2_true_relative_error=-0.0006984773736187222, series_2_approximate_relative_error=-0.0013235336663934838
+# ----------
+# ----------
+# At number of terms: i=14
+# Approximate value from series 1: series_1_value=0.02445667144483013
+# Approximate value from series 2: series_2_value=0.006739471829362351
+# Series 1 errors: series_1_true_relative_error=-2.6296918697683624, series_1_approximate_relative_error=2.8626902538261425
+# Series 2 errors: series_2_true_relative_error=-0.00022630474272800072, series_2_approximate_relative_error=-0.00047206580016112554
+# ----------
+# ----------
+# At number of terms: i=15
+# Approximate value from series 1: series_1_value=0.0011193797827823496
+# Approximate value from series 2: series_2_value=0.006738412005050836
+# Series 1 errors: series_1_true_relative_error=0.8338693102242642, series_1_approximate_relative_error=-20.848412684424414
+# Series 2 errors: series_2_true_relative_error=-6.901286858385092e-05, series_2_approximate_relative_error=-0.0001572810197298935
+# ----------
+# ----------
+# At number of terms: i=16
+# Approximate value from series 1: series_1_value=0.00841228342717228
+# Approximate value from series 2: series_2_value=0.006738080878308424
+# Series 1 errors: series_1_true_relative_error=-0.24849355852343158, series_1_approximate_relative_error=0.8669350845732715
+# Series 2 errors: series_2_true_relative_error=-1.986930268582654e-05, series_2_approximate_relative_error=-4.914258946908667e-05
+# ----------
+# ----------
+# At number of terms: i=17
+# Approximate value from series 1: series_1_value=0.006267311767057594
+# Approximate value from series 2: series_2_value=0.006737983494283331
+# Series 1 errors: series_1_true_relative_error=0.06984846169647907, series_1_approximate_relative_error=-0.34224748023373297
+# Series 2 errors: series_2_true_relative_error=-5.4162318774420015e-06, series_2_approximate_relative_error=-1.445299252744725e-05
+# ----------
+# ----------
+# At number of terms: i=18
+# Approximate value from series 1: series_1_value=0.006863137228200562
+# Approximate value from series 2: series_2_value=0.006737956443664812
+# Series 1 errors: series_1_true_relative_error=-0.01857987725349597, series_1_approximate_relative_error=0.08681532094312894
+# Series 2 errors: series_2_true_relative_error=-1.4015641280895608e-06, series_2_approximate_relative_error=-4.014662122742152e-06
+# ----------
+# ----------
+# At number of terms: i=19
+# Approximate value from series 1: series_1_value=0.00670634105421557
+# Approximate value from series 2: series_2_value=0.00673794932511709
+# Series 1 errors: series_1_true_relative_error=0.00469073825965538, series_1_approximate_relative_error=-0.02338028631669875
+# Series 2 errors: series_2_true_relative_error=-3.450779726410502e-07, series_2_approximate_relative_error=-1.0564857908512693e-06
+# ----------
+# ----------
+# At number of terms: i=20
+# Approximate value from series 1: series_1_value=0.006745540097711817
+# Approximate value from series 2: series_2_value=0.00673794754548251
+# Series 1 errors: series_1_true_relative_error=-0.0011269156186324292, series_1_approximate_relative_error=0.005811105253016646
+# Series 2 errors: series_2_true_relative_error=-8.095678261099692e-08, series_2_approximate_relative_error=-2.641211687137712e-07
+# ----------

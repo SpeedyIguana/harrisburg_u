@@ -1,0 +1,8 @@
+# py
+
+.venv/
+__pycache__/
+
+# Data
+
+maryland_crash_data.csv
