@@ -12,7 +12,7 @@ def graph(
     title: str = "title",
     save_fig: bool = False,
     fig: str = "plot.png",
-    show: bool = True,
+    show: bool = False,
 ):
     xp = (xu - xl) / 1000.0
     xpts = np.arange(xl, xu, xp)
